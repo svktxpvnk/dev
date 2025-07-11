@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>svktxpvnk - Web Programmer</title>
+    
+    <!-- Memuat Tailwind CSS untuk styling modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Memuat Google Fonts untuk tipografi yang lebih baik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS Kustom untuk Animasi dan Tampilan */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #f3f4f6;
+            background-color: #111827; /* Latar belakang dasar */
+            overflow: hidden; /* Mencegah scroll bar dari canvas */
+        }
+
+        /* BARU: Styling untuk Canvas Animasi Partikel */
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Di belakang konten */
+        }
+
+        /* Kontainer untuk konten agar berada di atas canvas */
+        .content-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Animasi untuk efek mengetik */
+        .typing-effect {
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: .15em solid #3b82f6;
+            animation: 
+                typing 3.5s steps(40, end) forwards,
+                blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #3b82f6; }
+        }
+
+        /* Transisi halus saat menampilkan/menyembunyikan section */
+        .section-fade {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Style untuk progress bar */
+        .progress-bar-container {
+            background-color: #4b5563;
+        }
+        .progress-bar {
+            background-color: #3b82f6;
+            transition: width 1.5s ease-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- BARU: Canvas untuk animasi partikel -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Kontainer Utama diubah menjadi .content-container -->
+    <div class="relative min-h-screen flex items-center justify-center overflow-hidden p-4 content-container">
+
+        <!-- ===== BAGIAN 1: HALAMAN PEMBUKA (HERO) ===== -->
+        <section id="hero-section" class="text-center section-fade section-visible w-full">
+            <div class="bg-black bg-opacity-25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/20 p-8 md:p-12 max-w-3xl w-full mx-auto">
+                <h1 class="text-4xl md:text-6xl font-black uppercase tracking-wider mb-4">Halo, Saya svktxpvnk</h1>
+                <div class="inline-block">
+                     <h2 class="text-2xl md:text-4xl font-bold text-blue-400 typing-effect">Seorang Web Programmer</h2>
+                </div>
+                <p class="mt-6 text-lg text-gray-300 max-w-xl mx-auto">
+                    Menciptakan solusi web yang modern, responsif, dan fungsional untuk membantu bisnis Anda bertumbuh.
+                </p>
+                <button id="see-more-btn" class="mt-10 px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Lihat Selengkapnya
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== BAGIAN 2: BIODATA & KEAHLIAN (Disembunyikan Awalnya) ===== -->
+        <section id="biodata-section" class="absolute top-0 left-0 w-full h-full flex items-center justify-center p-4 section-fade section-hidden">
+            <div class="bg-black bg-opacity-25 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-100/20 p-8 md:p-12 max-w-4xl w-full mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+                    
+                    <div class="flex justify-center md:col-span-1">
+                        <img src="sakti.jpg" 
+                             alt="Foto Profil svktxpvnk"
+                             class="w-48 h-48 md:w-60 md:h-60 rounded-full object-cover border-4 border-blue-500 shadow-lg">
+                    </div>
+
+                    <div class="md:col-span-2 text-left">
+                        <h2 class="text-3xl font-bold text-white mb-2">Tentang Saya</h2>
+                        <p class="text-gray-200 mb-6">
+                            Sebagai seorang Web Programmer yang berdedikasi, saya memiliki rasa ingin tau yang mendalam untuk memecahkan masalah melalui kode yang bersih dan efisien. Saya berambisi dalam mengubah ide dan desain menjadi aplikasi web yang fungsional, interaktif, dan ramah pengguna. Bagi saya, pengembangan web bukan hanya tentang menulis kode, tetapi tentang menciptakan pengalaman digital yang mulus dan berdampak. Saya selalu antusias untuk mempelajari teknologi baru dan menerapkannya untuk membangun solusi web yang lebih baik dan lebih cepat.
+                        </p>
+
+                        <h3 class="text-2xl font-bold text-white mb-4">Keahlian Saya</h3>
+                        <div class="space-y-4">
+                            <!-- HTML -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-base font-medium text-blue-300">HTML</span>
+                                    <span class="text-sm font-medium text-blue-300">95%</span>
+                                </div>
+                                <div class="w-full progress-bar-container rounded-full h-2.5">
+                                    <div class="progress-bar h-2.5 rounded-full" style="width: 0%" data-width="95%"></div>
+                                </div>
+                            </div>
+                            <!-- CSS3 -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-base font-medium text-blue-300">CSS3</span>
+                                    <span class="text-sm font-medium text-blue-300">85%</span>
+                                </div>
+                                <div class="w-full progress-bar-container rounded-full h-2.5">
+                                    <div class="progress-bar h-2.5 rounded-full" style="width: 0%" data-width="85%"></div>
+                                </div>
+                            </div>
+                            <!-- JavaScript -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-base font-medium text-blue-300">JavaScript</span>
+                                    <span class="text-sm font-medium text-blue-300">75%</span>
+                                </div>
+                                <div class="w-full progress-bar-container rounded-full h-2.5">
+                                    <div class="progress-bar h-2.5 rounded-full" style="width: 0%" data-width="75%"></div>
+                                </div>
+                            </div>
+                            <!-- UX/UI Design -->
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-base font-medium text-blue-300">UX/UI Design</span>
+                                    <span class="text-sm font-medium text-blue-300">85%</span>
+                                </div>
+                                <div class="w-full progress-bar-container rounded-full h-2.5">
+                                    <div class="progress-bar h-2.5 rounded-full" style="width: 0%" data-width="85%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="back-btn" class="mt-8 px-6 py-2 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500">
+                            Kembali
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Script untuk tombol (tidak berubah)
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroSection = document.getElementById('hero-section');
+            const biodataSection = document.getElementById('biodata-section');
+            const seeMoreBtn = document.getElementById('see-more-btn');
+            const backBtn = document.getElementById('back-btn');
+
+            seeMoreBtn.addEventListener('click', () => {
+                heroSection.classList.remove('section-visible');
+                heroSection.classList.add('section-hidden');
+                setTimeout(() => {
+                    biodataSection.classList.remove('section-hidden');
+                    biodataSection.classList.add('section-visible');
+                    const progressBars = document.querySelectorAll('.progress-bar');
+                    progressBars.forEach(bar => {
+                        const targetWidth = bar.getAttribute('data-width');
+                        setTimeout(() => { bar.style.width = targetWidth; }, 100); 
+                    });
+                }, 300);
+            });
+
+            backBtn.addEventListener('click', () => {
+                biodataSection.classList.remove('section-visible');
+                biodataSection.classList.add('section-hidden');
+                const progressBars = document.querySelectorAll('.progress-bar');
+                progressBars.forEach(bar => { bar.style.width = '0%'; });
+                setTimeout(() => {
+                    heroSection.classList.remove('section-hidden');
+                    heroSection.classList.add('section-visible');
+                }, 300);
+            });
+        });
+
+        // BARU: Script untuk Animasi Partikel
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray;
+
+        // Atur ukuran canvas agar sesuai dengan jendela
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+
+        // Buat partikel
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            // Gambar partikel individu
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+            // Perbarui posisi partikel
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        // Buat array partikel
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .4) - .2;
+                let directionY = (Math.random() * .4) - .2;
+                let color = '#f3f4f6'; // Warna partikel
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Hubungkan partikel dengan garis
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                                 + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = `rgba(59, 130, 246, ${opacityValue})`; // Warna garis biru
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Loop animasi
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        // Event listener untuk mengubah ukuran canvas saat jendela diubah
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            init();
+        });
+
+        init();
+        animate();
+    </script>
+
+</body>
+</html>
